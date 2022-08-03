@@ -1,0 +1,143 @@
+{
+  "name": "electron",
+  "productName": "Image Proof",
+  "version": "1.0.0",
+  "description": "FrameIncam",
+  "private": true,
+  "main": "public/main.js",
+  "homepage": "./",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.1.3",
+    "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.4.8",
+    "electron-settings": "^4.0.2",
+    "electron-updater": "^5.2.1",
+    "file-saver": "^2.0.5",
+    "getmac": "^5.20.0",
+    "jszip": "^3.10.0",
+    "node-disk-info": "^1.3.0",
+    "path": "^0.12.7",
+    "react": "^18.1.0",
+    "react-bootstrap": "^2.4.0",
+    "react-dom": "^18.1.0",
+    "react-icons": "^4.3.1",
+    "react-loading": "^2.0.3",
+    "react-otp-input": "^2.4.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "sweetalert": "^2.1.2",
+    "web-vitals": "^2.1.4"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "stock_trading_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "win": {
+    "asar": false,
+    "legalTrademarks": "(c) 2022 FrameInCam LLP",
+    "publisherName": "imageproof.ai",
+    "target": "NSIS",
+    "icon": "src/icon.ico"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "concurrently": "^7.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^18.2.0",
+    "electron-builder": "^23.0.3",
+    "electron-packager": "^15.5.1",
+    "wait-on": "^6.0.1"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron:serve": "concurrently -k \"cross-env BROWSER=none npm run start\" \"npm run electron:start\"",
+    "electron:build": "npm run build && electron-builder -c.extraMetadata.main=build/main.js",
+    "electron:start": "wait-on tcp:3000 && electron .",
+    "make-mac": "react-scripts build && electron-forge make --platform darwin",
+    "make-linux": "react-scripts build && electron-forge make --platform linux",
+    "make": "react-scripts build && electron-forge make",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . FrameInCam --overwrite --asar=true --platform=win32 --arch=ia32 --icon=public/image/photographer.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"CryptoApp\"",
+    "package-linux": "electron-packager . FrameInCam --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "build-installer": "electron-builder",
+    "build-prod": "react-scripts build && electron-builder --win",
+    "build-publish": "react-scripts build && electron-builder --win --publish always"
+  },
+  "author": "<FrameInCam>",
+  "license": "ISC",
+  "build": {
+    "appId": "imageproof.ai",
+    "productName": "ImageProof",
+    "directories": {
+      "output": "electron-build",
+      "buildResources": "resources"
+    },
+    "win": {
+      "publish": [
+        "github"
+      ]
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
