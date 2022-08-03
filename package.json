@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "description": "FrameIncam",
   "private": true,
-  "main": "public/main.js",
+  "main": "public/electron.js",
   "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
@@ -112,14 +112,27 @@
   "build": {
     "appId": "imageproof.ai",
     "productName": "ImageProof",
+    "copyright": "Copyright © 2020 your company",
     "directories": {
       "output": "electron-build",
       "buildResources": "resources"
     },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "license": "LICENCE.rtf"
+    },
     "win": {
       "publish": [
         "github"
-      ]
+      ],
+      "target": [
+        {
+          "target": "nsis"
+        }
+      ],
+      "icon": "public/icon.ico"
     }
   },
   "eslintConfig": {

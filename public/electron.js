@@ -7,7 +7,6 @@ const getmac = require("getmac");
 const electron = require("electron");
 const Menu = electron.Menu;
 // require("@electron/remote/main").initialize()
-
 function createWindow() {
   const window = new BrowserWindow({
     height: 720,
@@ -15,6 +14,7 @@ function createWindow() {
     minWidth: 600,
     minHeight: 200,
     icon: __dirname + "/icon.ico",
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -22,6 +22,21 @@ function createWindow() {
       webSecurity: false,
     },
   });
+  var splash = new BrowserWindow({
+    height: 720,
+    width: 1280,
+    minWidth: 600,
+    minHeight: 200,
+    transparent: false,
+    frame: true,
+    alwaysOnTop: true,
+  });
+  splash.loadFile(__dirname + "/splashscreen.html");
+  splash.center();
+  setTimeout(function () {
+    splash.close();
+    window.show();
+  }, 15000);
   window.webContents.on("did-finish-load", () => {
     let data = getmac.default();
     window.webContents.send("sending", data);
@@ -32,14 +47,13 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-  autoUpdater.checkForUpdates();
+  setTimeout(() => {
+    autoUpdater.checkForUpdates();
+  }, 1000);
 }
-
 // app.on("ready", createWindow);
-
 app.on("ready", function () {
   createWindow();
-
   const template = [
     {
       label: "File",
@@ -79,17 +93,14 @@ app.on("ready", function () {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 });
-
 app.on("window-all-closed", () => {
   if (process.platform === "darwin") {
     app.quit();
   }
 });
-
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
-
 autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
   const dialogOpts = {
     type: "info",
@@ -100,7 +111,6 @@ autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
   };
   dialog.showMessageBox(dialogOpts, (response) => {});
 });
-
 autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
   const dialogOpts = {
     type: "info",
