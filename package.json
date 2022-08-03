@@ -1,7 +1,7 @@
 {
   "name": "electron",
   "productName": "Image Proof",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "FrameIncam",
   "private": true,
   "main": "public/main.js",
@@ -105,7 +105,7 @@
     "package-linux": "electron-packager . FrameInCam --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
     "build-installer": "electron-builder",
     "build-prod": "react-scripts build && electron-builder --win",
-    "build-publish": "react-scripts build && electron-builder --win --publish always"
+    "build:publish": "react-scripts build && electron-builder --win --publish always"
   },
   "author": "<FrameInCam>",
   "license": "ISC",

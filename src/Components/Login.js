@@ -6,8 +6,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/userSlice";
 const { ipcRenderer } = window.require("electron");
-const log = window.require("electron-log")
-const login = log.scope("login")
+const log = window.require("electron-log");
+const login = log.scope("login");
 // import log from "electron-log";
 
 const Login = () => {
@@ -42,7 +42,7 @@ const Login = () => {
 
   const subcriptionBtn = () => {
     shell.openExternal("https://imageproof.ai/");
-    log.info(`Subscription`)
+    log.info(`Subscription`);
   };
 
   const loginSubmit = async (e) => {
@@ -52,7 +52,7 @@ const Login = () => {
       password: password,
       macId: macId,
     };
-    console.log(d)
+    console.log(d);
     if (email === "" || password === "") {
       setError(true);
     } else {
@@ -64,23 +64,23 @@ const Login = () => {
         console.log(data);
         const photographer = JSON.stringify(data.photographer);
         if (data.success) {
-          login.info()
-          log.info(`${data.msg}`)
+          login.info();
+          log.info(`${data.msg}`);
           swal({
             title: "success",
             text: data.msg,
             button: "Ok",
             icon: "success",
           });
-          log.info(`User Detail: ${photographer}`)
+          log.info(`User Detail: ${photographer}`);
           navigate("/dashboard");
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", photographer);
           dispatch(addUser(data.photographer));
         } else {
           const da = JSON.stringify(d);
-          log.error(`${data.msg}`)
-          log.error(`${da}`)
+          log.error(`${data.msg}`);
+          log.error(`${da}`);
           if (!data.subcription) {
             swal({
               title: "error",
@@ -111,7 +111,7 @@ const Login = () => {
       <div className={background ? "App popup-active" : "App"}>
         <div className="Login">
           <form onSubmit={loginSubmit}>
-            <h3>Login</h3>
+            <h3>Log</h3>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
